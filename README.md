@@ -5,7 +5,6 @@ Create YouTube Videos from NodeJS
 ## Todo
 
 * [ ] Find an Audio Visualizer
-* [ ]
 * [ ] Link with a wallpapers `royalty free` website to get image
 * [x] give the video a SoundCloud link to extract audio
 * [x] Link with YouTube API
