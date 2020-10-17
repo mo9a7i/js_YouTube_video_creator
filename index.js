@@ -10,9 +10,6 @@ const SC = require('node-soundcloud')
 const https = require('https')
 // 4- Movie Editing Library
 // 5- Canvas
-const {
-	createCanvas
-} = require('canvas')
 // 6- Audio API
 // 7- 
 // 8- FileSystem Library
@@ -20,34 +17,13 @@ const fs = require('fs');
 const readline = require('readline');
 const { file } = require('googleapis/build/src/apis/file');
 // 9- Visuallization Library
-const {Wave} = require('@foobar404/wave')
-let wave = new Wave();
+/*
+/	////////////////////
+/	START THE JOB BROTHA
+/ 	////////////////////
+*/
 
-options = {type:"bars"};
-wave.fromFile("audio_element_id","canvas_id", options);
-
-
-// https://howlerjs.com/
-
-
-
-
-// Create a Canvas
-const width = 1200
-const height = 600
-
-const canvas = createCanvas(width, height)
-const context = canvas.getContext('2d')
-
-
-
-// to finally save the canvas as image
-const buffer = canvas.toBuffer('image/png')
-const out_directory = './files/output_files/'
-const filename = 'test.png'
-fs.writeFileSync(out_directory + filename, buffer)
-
-
+process.exit();
 
 // Youtube Stuff
 // If modifying these scopes, delete your previously saved credentials

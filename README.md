@@ -20,10 +20,7 @@ Create YouTube Videos from NodeJS
 
 ## Resources
 
-* <https://zulko.github.io/moviepy/install.html>
-* download YouTube videos with this <https://github.com/ytdl-org/youtube-dl>
-* <https://pypi.org/project/soundcloud-lib/>
-* <https://github.com/Miserlou/SoundScrape>
+
 
 ## Content From
 
