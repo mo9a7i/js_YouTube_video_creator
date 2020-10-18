@@ -1,4 +1,9 @@
-// Trying to repurpose foobar404/wavejs fromfile function
+// Trying to repurpose foobar404/wavejs fromfile function https://github.com/foobar404/Wave.js/blob/master/dist/bundle.iife.js
+
+// Need to re-write Audio()
+// Need to re-write AudioContext()
+// Need to re-write Context
+
 
 function fromFile(file, options = {}) {
     //options
