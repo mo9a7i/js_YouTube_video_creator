@@ -19,7 +19,7 @@ const soundcloud = require('./models/soundcloud')
 */
 const VideoShow = require('videoshow')
 const fs = require('fs')
-const { createFolder, download_images, download_sound } = require('./models/my_utils')
+const { createFolder, download_images, download_sound, resize_all_images } = require('./models/my_utils')
 
 
 // CONSTANTS
@@ -37,6 +37,8 @@ download_images(PHOTOS_SEARCH_QUERY, PROJECT_DIRECTORY)
 // DOWNLOAD SOUND
 download_sound('https://soundcloud.com/naoya-sakamata/heartless-flock-sad-piano-music-naoyas-original-composition','soundcloud', PROJECT_DIRECTORY);
 
+// Resize all images to fit
+resize_all_images(PROJECT_DIRECTORY)
 // COMBINE INTO A VIDEO
 
 

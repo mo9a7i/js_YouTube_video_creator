@@ -28,9 +28,13 @@ function createFolder(project_name) {
 
 	if (!fs.existsSync(PROJECT_DIRECTORY)) {
 		fs.mkdirSync(PROJECT_DIRECTORY);
+		fs.mkdirSync(PROJECT_DIRECTORY + 'images/');
+		fs.mkdirSync(PROJECT_DIRECTORY + 'images/resized/');
+		fs.mkdirSync(PROJECT_DIRECTORY + 'images/raw/');
 	}
 	return PROJECT_DIRECTORY;
 }
+
 
 async function download_images(query, dir) {
 	const pexel = require('./../models/pexel')
@@ -40,6 +44,7 @@ async function download_images(query, dir) {
 	console.log('finished pexel ' + status);
 	status = await unsplash.lets_unsplash(query, dir)
 	console.log('finished usplash ' + status);
+	return 'success';
 }
 
 
@@ -57,9 +62,53 @@ async function download_sound(url, type, dir) {
 			console.log(`Sorry, couldn't understand the sound source.`);
 	}
 
+	return 'success';
+
+}
+
+
+async function resize_all_images(dir){
+	console.log('resizing all images')
+	const fs = require('fs')
+	var _array = require('lodash/array');
+	const path = require('path');
+	let files = fs.readdirSync( dir + 'images/raw/');
+	const allowed_extensions = ['jpg','jpeg','png'];
+
+	try {
+		for( const file of files ) {
+	
+			files = _array.remove(files, function(file) {
+				return allowed_extensions.includes(getExtension(file));
+			});
+		}
+
+		console.log(files);
+		console.log(dir);
+		console.log(files[5]);
+		for( const file of files ) {
+			const sharp = require('sharp');
+			const filename = path.join( dir + 'images/raw', file);			
+			const image = sharp(filename);
+			const resized = image.resize({ height:720, width:1080});
+			
+			await resized.toFile(path.join(dir + 'images/resized/','1080_720_' + file));
+			console.log("Image Resized: " + '1080_720_' + file)
+		}
+		
+	} 
+	catch (error) {
+		console.log(error);
+	}
+}
+
+function getExtension(filename) {
+    var i = filename.lastIndexOf('.');
+    return (i < 0) ? '' : filename.substr(i+1);
 }
 
 module.exports.download = download;
 module.exports.createFolder = createFolder;
 module.exports.download_images = download_images;
 module.exports.download_sound = download_sound;
+module.exports.resize_all_images = resize_all_images;
