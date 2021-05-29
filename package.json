@@ -30,10 +30,12 @@
   },
   "homepage": "https://github.com/Mo9a7i/js_YouTube_video_creator#readme",
   "dependencies": {
+    "canvas": "^2.8.0",
     "google-auth-library": "^6.1.1",
     "googleapis": "^61.0.0",
     "jsdom": "^16.4.0",
     "lodash": "^4.17.20",
+    "node-canvas": "^2.7.0",
     "node-fetch": "^2.6.1",
     "pexels": "^1.0.1",
     "request": "^2.88.2",

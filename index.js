@@ -8,10 +8,17 @@ const soundcloud = require('./models/soundcloud')
 // 3- HTTPS library
 // 4- Movie Editing Library
 // 5- Canvas
+const { createCanvas, loadImage } = require('canvas')
+
 // 6- Audio API
 // 7- Photos Library
 
 // 9- Visuallization Library
+const {Wave} = require("./models/visualizer/bundle.cjs")
+
+const wave = new Wave();
+
+
 /*
 /	////////////////////
 /	START THE JOB BROTHA
