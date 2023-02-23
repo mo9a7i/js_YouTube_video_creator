@@ -18,7 +18,7 @@ async function download(url, path) {
 	throw new Error(`unexpected response ${response.statusText}`);
 };
 
-function createFolder(project_name) {
+function createFolder(project_name, createImageDirectories = true) {
 	const fs = require('fs')
 	const {
 		folders_config
@@ -28,10 +28,14 @@ function createFolder(project_name) {
 
 	if (!fs.existsSync(PROJECT_DIRECTORY)) {
 		fs.mkdirSync(PROJECT_DIRECTORY);
-		fs.mkdirSync(PROJECT_DIRECTORY + 'images/');
-		fs.mkdirSync(PROJECT_DIRECTORY + 'images/resized/');
-		fs.mkdirSync(PROJECT_DIRECTORY + 'images/raw/');
+
+		if (createImageDirectories) {
+			fs.mkdirSync(PROJECT_DIRECTORY + 'images/');
+			fs.mkdirSync(PROJECT_DIRECTORY + 'images/resized/');
+			fs.mkdirSync(PROJECT_DIRECTORY + 'images/raw/');
+		}
 	}
+
 	return PROJECT_DIRECTORY;
 }
 
@@ -46,7 +50,6 @@ async function download_images(query, dir) {
 	console.log('finished usplash ' + status);
 	return 'success';
 }
-
 
 async function download_sound(url, type, dir) {
 	switch (type) {
@@ -66,40 +69,60 @@ async function download_sound(url, type, dir) {
 
 }
 
-
-async function resize_all_images(dir){
-	console.log('resizing all images')
-	const fs = require('fs')
-	var _array = require('lodash/array');
-	const path = require('path');
-	let files = fs.readdirSync( dir + 'images/raw/');
-	const allowed_extensions = ['jpg','jpeg','png'];
-
-	try {
-		for( const file of files ) {
-	
-			files = _array.remove(files, function(file) {
-				return allowed_extensions.includes(getExtension(file));
-			});
-		}
-
-		console.log(files);
-		console.log(dir);
-		console.log(files[5]);
-		for( const file of files ) {
-			const sharp = require('sharp');
-			const filename = path.join( dir + 'images/raw', file);			
-			const image = sharp(filename);
-			const resized = image.resize({ height:720, width:1080});
-			
-			await resized.toFile(path.join(dir + 'images/resized/','1080_720_' + file));
-			console.log("Image Resized: " + '1080_720_' + file)
-		}
-		
-	} 
-	catch (error) {
-		console.log(error);
-	}
+async function resize_all_images(dir, maxWidth = 1080, maxHeight = 720) {
+    const fs = require('fs');
+    const path = require('path');
+    const sharp = require('sharp');
+    const allowed_extensions = ['jpg', 'jpeg', 'png'];
+    const rawDir = path.join(dir, 'images', 'raw');
+    const resizedDir = path.join(dir, 'images', 'resized');
+    
+    if (!fs.existsSync(rawDir)) {
+        console.log(`The directory ${rawDir} does not exist.`);
+        return;
+    }
+    
+    if (!fs.existsSync(resizedDir)) {
+        fs.mkdirSync(resizedDir, { recursive: true });
+    }
+    
+    try {
+        const files = fs.readdirSync(rawDir);
+        
+        for (const file of files) {
+            const extension = path.extname(file).toLowerCase();
+            if (!allowed_extensions.includes(extension)) {
+                console.log(`The file ${file} has an invalid extension (${extension}). Skipping...`);
+                continue;
+            }
+            
+            const input = path.join(rawDir, file);
+            const output = path.join(resizedDir, `resized_${file}`);
+            
+            const image = sharp(input);
+            const metadata = await image.metadata();
+            
+            if (metadata.width <= maxWidth && metadata.height <= maxHeight) {
+                console.log(`The image ${file} is already small enough. Skipping...`);
+                continue;
+            }
+            
+            let resizeOptions = { withoutEnlargement: true };
+            if (metadata.width > maxWidth) {
+                resizeOptions.width = maxWidth;
+            }
+            if (metadata.height > maxHeight) {
+                resizeOptions.height = maxHeight;
+            }
+            
+            await image
+                .resize(resizeOptions)
+                .toFile(output);
+            console.log(`Resized image ${file} to ${resizeOptions.width}x${resizeOptions.height}.`);
+        }
+    } catch (error) {
+        console.log(`An error occurred while resizing images: ${error.message}`);
+    }
 }
 
 function getExtension(filename) {

@@ -30,20 +30,24 @@
   },
   "homepage": "https://github.com/Mo9a7i/js_YouTube_video_creator#readme",
   "dependencies": {
-    "canvas": "^2.8.0",
+    "canvas": "^2.11.0",
+    "canvas-constructor": "^7.0.0",
+    "convert-audio": "^1.0.1",
+    "fluent-ffmpeg": "^2.1.2",
     "google-auth-library": "^6.1.1",
     "googleapis": "^61.0.0",
     "jsdom": "^16.4.0",
     "lodash": "^4.17.20",
-    "node-canvas": "^2.7.0",
+    "mp3-to-wav": "^0.1.11",
     "node-fetch": "^2.6.1",
+    "node-wav": "^0.0.2",
     "pexels": "^1.0.1",
+    "puppeteer": "^19.7.2",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.9",
     "sharp": "^0.26.2",
-    "soundcloud-downloader": "^0.1.8",
+    "soundcloud-downloader": "^0.2.4",
     "unsplash-js": "^6.3.0",
     "videoshow": "^0.1.12"
-  },
-  "devDependencies": {}
+  }
 }

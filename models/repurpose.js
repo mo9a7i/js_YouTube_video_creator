@@ -4,7 +4,6 @@
 // Need to re-write AudioContext()
 // Need to re-write Context
 
-
 function fromFile(file, options = {}) {
     //options
     if (!options.stroke) options.stroke = 10;
