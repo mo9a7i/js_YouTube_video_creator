@@ -1,12 +1,11 @@
-
-// 2- Soundcloud Library
-const SC = require('soundcloud-downloader').default
-const fs = require('fs')
-const util = require('util');
-const streamPipeline = util.promisify(require('stream').pipeline);
-// Simple soundcloud call
-
-async function get_track(url, path){
+/**
+ * Downloads a track from SoundCloud
+ * @async
+ * @param {string} url - SoundCloud track URL
+ * @param {string} path - Directory to save the track
+ * @throws {Error} If download fails or track is unavailable
+ */
+async function get_track(url, path) {
     try {
         const output_file_path = path + 'track.mp3';
         const CLIENT_ID = 's51g1yFKlR5Rcl9OHi0MNk7PC6XvXw0y'

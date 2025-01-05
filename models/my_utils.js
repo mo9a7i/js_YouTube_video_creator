@@ -1,3 +1,11 @@
+/**
+ * Downloads a file from a URL to a specified path
+ * @async
+ * @param {string} url - URL to download from
+ * @param {string} path - Local path to save the file
+ * @returns {Promise} Result of the download operation
+ * @throws {Error} If download fails or response is invalid
+ */
 async function download(url, path) {
 	const fetch = require('node-fetch');
 	const util = require('util');
@@ -18,6 +26,12 @@ async function download(url, path) {
 	throw new Error(`unexpected response ${response.statusText}`);
 };
 
+/**
+ * Creates project folder structure
+ * @param {string} project_name - Name of the project
+ * @param {boolean} [createImageDirectories=true] - Whether to create image subdirectories
+ * @returns {string} Path to created project directory
+ */
 function createFolder(project_name, createImageDirectories = true) {
 	const fs = require('fs')
 	const {
@@ -39,7 +53,13 @@ function createFolder(project_name, createImageDirectories = true) {
 	return PROJECT_DIRECTORY;
 }
 
-
+/**
+ * Downloads images from multiple sources based on search query
+ * @async
+ * @param {string} query - Search query for images
+ * @param {string} dir - Directory to save images
+ * @returns {Promise<string>} Status of download operations
+ */
 async function download_images(query, dir) {
 	const pexel = require('./../models/pexel')
 	const unsplash = require('./../models/unsplash')
@@ -51,6 +71,14 @@ async function download_images(query, dir) {
 	return 'success';
 }
 
+/**
+ * Downloads audio from supported sources
+ * @async
+ * @param {string} url - URL of the audio source
+ * @param {('soundcloud'|'raw')} type - Type of audio source
+ * @param {string} dir - Directory to save audio file
+ * @returns {Promise<string>} Status of download operation
+ */
 async function download_sound(url, type, dir) {
 	switch (type) {
 		case 'soundcloud':
@@ -69,6 +97,13 @@ async function download_sound(url, type, dir) {
 
 }
 
+/**
+ * Resizes all images in a directory to specified dimensions
+ * @async
+ * @param {string} dir - Directory containing images
+ * @param {number} [maxWidth=1080] - Maximum width for resized images
+ * @param {number} [maxHeight=720] - Maximum height for resized images
+ */
 async function resize_all_images(dir, maxWidth = 1080, maxHeight = 720) {
     const fs = require('fs');
     const path = require('path');

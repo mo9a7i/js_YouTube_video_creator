@@ -2,6 +2,14 @@ const { createClient } = require('pexels');
 const { pexels_config } = require('./../config/config.json')
 const {download} = require('./my_utils')
 
+/**
+ * Fetches and downloads images from Pexels API
+ * @async
+ * @param {string} query - Search query for images
+ * @param {string} project_directory - Directory to save downloaded images
+ * @returns {Promise<string>} Status of the operation
+ * @throws {Error} If API call fails or download fails
+ */
 async function lets_pexel(query, project_directory){
     console.log('started lets_pexel')
     try {
