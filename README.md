@@ -1,4 +1,6 @@
-# a NodeJS YouTube video creator
+# :no_entry: [DEPRECATED] Active at [https://github.com/mo9a7i/ts_youtube_music_video_creator](https://github.com/mo9a7i/ts_youtube_music_video_creator)
+
+## a NodeJS YouTube video creator
 
 Create YouTube Videos from NodeJS
 
